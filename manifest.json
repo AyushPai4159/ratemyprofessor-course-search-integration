@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "ConnectCarolina RateMyProfessor Integration - UNC Chapel Hill",
+  "version": "0.1.0",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {},
+  "host_permissions": [
+    "https://www.ratemyprofessors.com/"
+  ],
+  "permissions": [
+    "webRequest",
+    "webNavigation",
+    "tabs"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "bg_page.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["jquery.min.js", "data_processing.js", "script.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
