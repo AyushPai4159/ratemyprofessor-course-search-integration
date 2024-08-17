@@ -5,7 +5,7 @@ async function generateProfRating(fullName) {
     try {
         const result = await getProfessor(fullName, schoolID, schoolNameWebEncoded);
 
-        let stylingElement = "style='width: 50px;background-color: rgb(96, 143, 218);display: flex;justify-content: center;border-radius: 10px;border-top: 1px solid rgb(58, 89, 138);border-bottom: 3px solid rgb(58, 89, 138);font-size: smaller;font-weight: bold;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;padding-top: 0.25em;padding-bottom: 0.25em;'";
+        let stylingElement = "style='width: 50px;background-color: rgb(100, 181, 246);display: flex;justify-content: center;border-radius: 10px;border-top: 1px solid rgb(30, 136, 229);border-bottom: 3px solid rgb(30, 136, 229);font-size: smaller;font-weight: bold;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;padding-top: 0.25em;padding-bottom: 0.25em;'";
 
         let rating = result.avgRating;
         let id = result.id;
@@ -35,8 +35,8 @@ async function generateProfRating(fullName) {
             case rating < 1:
                 stylingElement =
                     "style='width: 50px;background-color: rgb(183, 28, 28);display: flex;justify-content: center;border-radius: 10px;border-top: 1px solid rgb(136, 14, 79);border-bottom: 3px solid rgb(136, 14, 79);font-size: larger;font-weight: bold;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;'";
-        }
 
+        }
         let newRating = Number.isInteger(rating) ? rating + ".0" : rating.toString();
         return `<td ${stylingElement}><a style='color: white !important;' href=https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${id}>${newRating}</a></td>`;
     } catch (error) {
@@ -118,4 +118,3 @@ function checkAndRun() {
 
 // Run the check every 500ms
 setInterval(checkAndRun, 500);
-
