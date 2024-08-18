@@ -38,7 +38,7 @@ async function generateProfRating(fullName) {
 
         }
         let newRating = Number.isInteger(rating) ? rating + ".0" : rating.toString();
-        return `<td ${stylingElement}><a style='color: white !important;' href=https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${id}>${newRating}</a></td>`;
+        return `<td ${stylingElement}><a style='color: white !important;' href=https://www.ratemyprofessors.com/professor/${id}>${newRating}</a></td>`;
     } catch (error) {
         console.error('Error fetching professor data:', error);
         return null;
