@@ -3,12 +3,20 @@
   "name": "ConnectCarolina RateMyProfessor Integration - UNC Chapel Hill",
   "version": "0.1.0",
   "icons": {
-    "16": "icon.png",
-    "32": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
+    "16": "icons/icon.png",
+    "32": "icons/icon.png",
+    "48": "icons/icon.png",
+    "128": "icons/icon.png"
   },
-  "action": {},
+  "action": {
+    "default_popup": "popup_menu/popup.html",
+    "default_icon": {
+      "16": "icons/icon.png",
+      "32": "icons/icon.png",
+      "48": "icons/icon.png",
+      "128": "icons/icon.png"
+    }
+  },
   "host_permissions": [
     "https://www.ratemyprofessors.com/"
   ],

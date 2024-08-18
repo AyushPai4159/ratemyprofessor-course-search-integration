@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension UI</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1 class="extension-title">ConnectCarolina RateMyProfessor Integration</h1>
+        <img src="../icons/icon.png" alt="Logo" class="logo">
+    </header>
+
+    <main>
+        <div class="settings">
+            <button id="toggle-tooltips" class="toggle-button">
+                Tooltips: OFF
+                <div class="tooltip">
+                    Turning this setting off will prevent detailed requests for comments from being sent when you hover your mouse over a profile.
+                </div>
+            </button>
+            <button id="enable-feature" class="toggle-button">Enable Feature</button>
+            <button id="disable-feature" class="toggle-button">Disable Feature</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Successful Lookups: <span id="successful-lookups">0</span>/<span id="total-requests">0</span></p>
+        <a href="https://your-feedback-link.com" id="feedback-link" target="_blank">Help us improve this</a>
+    </footer>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
