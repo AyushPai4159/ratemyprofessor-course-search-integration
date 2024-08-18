@@ -77,3 +77,6 @@ node_modules
 
 ## Extension Zip
 *.zip
+
+## Ignore these files temporarily
+*.ignore
