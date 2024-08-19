@@ -38,7 +38,7 @@ function normalDistributionRandom(min, max) {
     return result;
 }
 
-function getProfessor(name, schoolID, schoolNameWebEncoded, useCache = true) {
+function searchProfessor(name, schoolID, schoolNameWebEncoded, useCache = true) {
     return new Promise((resolve, reject) => {
         if (useCache && professorCache.get(name) !== undefined) {
             console.log("Cache hit for professor " + name + ": " + professorCache.get(name))
@@ -210,4 +210,4 @@ fragment RateTeacherLink_teacher on Teacher {
     });
 }
 
-window.getProfessor = getProfessor;
+window.getProfessor = searchProfessor;

@@ -3,7 +3,7 @@ let schoolNameWebEncoded = 'The%20University%20of%20North%20Carolina%20at%20Chap
 
 async function generateProfRating(fullName) {
     try {
-        const result = await getProfessor(fullName, schoolID, schoolNameWebEncoded);
+        const result = await searchProfessor(fullName, schoolID, schoolNameWebEncoded);
 
         let stylingElement = "style='width: 50px;background-color: rgb(100, 181, 246);display: flex;justify-content: center;border-radius: 10px;border-top: 1px solid rgb(30, 136, 229);border-bottom: 3px solid rgb(30, 136, 229);font-size: smaller;font-weight: bold;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;padding-top: 0.25em;padding-bottom: 0.25em;'";
 
