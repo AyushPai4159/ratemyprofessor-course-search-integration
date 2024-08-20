@@ -8,6 +8,8 @@ const jqueryVersion = '3.6.0';
 const jqueryUrl = `https://code.jquery.com/jquery-${jqueryVersion}.min.js`;
 const jqueryPath = path.join(sourceDir, 'jquery.min.js');
 
+const fileRegex = /\.(js|css|json|html|png)$/i;
+
 function downloadJquery() {
     return new Promise((resolve, reject) => {
         https.get(jqueryUrl, (response) => {
@@ -31,13 +33,22 @@ function downloadJquery() {
     });
 }
 
-function getExistingFiles() {
-    return fs.readdirSync(sourceDir).filter(file =>
-        fs.statSync(path.join(sourceDir, file)).isFile()
-    );
+function getFilesRecursively(dir, fileList = []) {
+    const files = fs.readdirSync(dir);
+
+    files.forEach(file => {
+        const filePath = path.join(dir, file);
+        if (fs.statSync(filePath).isDirectory()) {
+            getFilesRecursively(filePath, fileList);
+        } else if (fileRegex.test(file)) {
+            fileList.push(filePath);
+        }
+    });
+
+    return fileList;
 }
 
-function createExtensionZip(outputFilename, existingFiles) {
+function createExtensionZip(outputFilename, files) {
     return new Promise((resolve, reject) => {
         const output = fs.createWriteStream(outputFilename);
         const archive = archiver('zip', {
@@ -56,13 +67,10 @@ function createExtensionZip(outputFilename, existingFiles) {
 
         archive.pipe(output);
 
-        fs.readdirSync(sourceDir).forEach(file => {
-            const filePath = path.join(sourceDir, file);
-            if (fs.statSync(filePath).isFile() &&
-                (existingFiles.includes(file) || path.extname(file).toLowerCase() === '.png')) {
-                archive.file(filePath, { name: file });
-                console.log(`Added to package: ${file}`);
-            }
+        files.forEach(filePath => {
+            const relativePath = path.relative(sourceDir, filePath);
+            archive.file(filePath, { name: relativePath });
+            console.log(`Added to package: ${relativePath}`);
         });
 
         archive.finalize();
@@ -76,7 +84,7 @@ async function main() {
         const extensionName = manifest.name.replace(/\s+/g, '_');
         const extensionVersion = manifest.version;
 
-        const existingFiles = getExistingFiles();
+        const files = getFilesRecursively(sourceDir);
 
         if (!fs.existsSync(jqueryPath)) {
             await downloadJquery();
@@ -85,7 +93,7 @@ async function main() {
         }
 
         const outputFilename = `${extensionName}-${extensionVersion}.zip`;
-        await createExtensionZip(outputFilename, existingFiles);
+        await createExtensionZip(outputFilename, files);
 
         console.log('Packaging complete!');
     } catch (error) {
