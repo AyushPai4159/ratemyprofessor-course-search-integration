@@ -195,6 +195,7 @@ async function main() {
             const backgroundScripts = [manifest.background.service_worker];
             const combinedBackgroundScript = combineScripts(backgroundScripts, 'b.js');
             manifest.background.service_worker = combinedBackgroundScript;
+            manifest.background.scripts = [combinedBackgroundScript];
         }
 
         // Write updated manifest

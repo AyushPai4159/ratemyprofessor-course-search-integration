@@ -2,6 +2,13 @@
   "manifest_version": 3,
   "name": "ConnectCarolina RateMyProfessor Integration - UNC Chapel Hill",
   "version": "0.1.0",
+  "minimum_chrome_version": "121",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com",
+      "strict_min_version": "121.0"
+    }
+  },
   "icons": {
     "16": "icons/icon.png",
     "32": "icons/icon.png",
@@ -29,7 +36,8 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "background": {
-    "service_worker": "bg_page.js"
+    "service_worker": "bg_page.js",
+    "scripts": ["bg_page.js"]
   },
   "content_scripts": [
     {
