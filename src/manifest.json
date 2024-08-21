@@ -37,8 +37,14 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js": ["jquery.min.js", "data_processing.js", "script.js"],
-      "css": ["styles.css"]
+      "js": [
+        "jquery.min.js",
+        "data_processing.js",
+        "script.js"
+      ],
+      "css": [
+        "styles.css"
+      ]
     }
   ]
 }
