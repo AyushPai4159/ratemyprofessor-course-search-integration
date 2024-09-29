@@ -1,8 +1,7 @@
 # RateMyTarHeels
 
 Firefox and Chrome browser extension that displays ratings of each professor on UNC Chapel Hill's ConnectCarolina while searching for courses.
-
-Requires Firefox 121+ or a Chromium 121+ based browser.
+Requires Firefox 121+ or a Chromium 121+ based browser. Currently only the browser extension is open source.
 
 ## Developing
 ### Firefox
