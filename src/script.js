@@ -5,12 +5,15 @@ async function generateProfRating(fullName) {
     try {
         const result = await searchProfessor(fullName, schoolID, schoolNameWebEncoded);
 
+        
+
         let stylingElement = "style='width: 50px;background-color: rgb(100, 181, 246);display: flex;justify-content: center;border-radius: 10px;border-top: 1px solid rgb(30, 136, 229);border-bottom: 3px solid rgb(30, 136, 229);font-size: smaller;font-weight: bold;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;padding-top: 0.25em;padding-bottom: 0.25em;'";
 
         let rating = result.avgRating;
         let id = result.id;
 
         // Check if the professor has no ratings or RMP's returned result has a different name
+        //|| checkNameMatch(result.name, fullName)
         if (result.numRatings === 0 || checkNameMatch(result.name, fullName)) {
             return `<td ${stylingElement}><a style='color: white !important;' href=https://www.ratemyprofessors.com/search/professors/${schoolID}?q=${fullName}>search</a></td>`;
         }
@@ -45,10 +48,27 @@ async function generateProfRating(fullName) {
     }
 }
 
+
+
+//webscrappes the connect carolina page
 async function run() {
     let iframe;
     do {
-        iframe = document.getElementById("ptifrmtgtframe");
+        //ptModFrame_0
+        //ptifrmtgtframe
+        let i = 1;
+        iframe = document.getElementById("ptModFrame_0");
+        while(iframe === null && i < 5){
+            iframe = document.getElementById("ptModFrame_" + i);
+            console.log("ptModFrame_" + i)
+            i++;
+        }
+       if(iframe === null)
+         iframe = document.getElementById("ptifrmtgtframe");
+
+        console.log("PTMODFRAME: " + iframe)
+
+        console.log("iframe: " + iframe);
         await new Promise(resolve => setTimeout(resolve, 100)); // Wait for 100ms before trying again
     } while (iframe === undefined);
 
@@ -76,6 +96,7 @@ async function run() {
                     const html = await generateProfRating(name);
                     // console.log("Generated HTML:", html);
                     if (html !== null) {
+                        //insert the newly generated html after node
                         $(instructorSpan).after(html);
                         // console.log("HTML inserted after instructor span.");
                     }
@@ -94,7 +115,15 @@ let lastResultCount = null;
 let isRunning = false;
 
 function checkAndRun() {
-    let iframe = document.getElementById("ptifrmtgtframe");
+    iframe = document.getElementById("ptModFrame_0");
+    let i = 1;
+        while(iframe === null && i < 5){
+            iframe = document.getElementById("ptModFrame_" + i);
+            console.log("ptModFrame_" + i)
+            i++;
+        }
+       if(iframe === null)
+         iframe = document.getElementById("ptifrmtgtframe");
     if (!iframe) return;
 
     let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -103,7 +132,7 @@ function checkAndRun() {
     if (!resultElement) return;
 
     let currentResultCount = resultElement.innerText.replace(/\D/g, "");
-
+    
     if (currentResultCount !== lastResultCount && !isRunning) {
         isRunning = true;
         lastResultCount = currentResultCount;
@@ -118,3 +147,6 @@ function checkAndRun() {
 
 // Run the check every 500ms
 setInterval(checkAndRun, 500);
+
+
+
