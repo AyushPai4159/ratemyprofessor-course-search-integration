@@ -12,7 +12,6 @@ const jqueryVersion = '3.6.0';
 const jqueryUrl = `https://code.jquery.com/jquery-${jqueryVersion}.min.js`;
 const jqueryPath = path.join(sourceDir, 'jquery.min.js');
 
-
 const fileRegex = /\.(js|css|json|html|png)$/i;
 
 function downloadJquery() {
