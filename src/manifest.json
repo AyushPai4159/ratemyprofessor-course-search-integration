@@ -31,14 +31,14 @@
   "permissions": [
     "webRequest",
     "webNavigation",
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "background": {
-    "service_worker": "bg_page.js",
-    "scripts": ["bg_page.js"]
+    "service_worker": "bg_page.js"
   },
   "content_scripts": [
     {
