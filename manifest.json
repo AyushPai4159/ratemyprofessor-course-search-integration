@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/chrome-manifest",
   "manifest_version": 3,
-  "name": "ConnectCarolina RateMyProfessor Integration - UNC Chapel Hill",
+  "name": "Registron",
   "version": "0.1.0",
   "minimum_chrome_version": "121",
   "browser_specific_settings": {
@@ -17,7 +17,7 @@
     "128": "icons/icon.png"
   },
   "action": {
-    "default_popup": "popup_menu/popup.html",
+    "default_popup": "src/popup_menu/popup.html",
     "default_icon": {
       "16": "icons/icon.png",
       "32": "icons/icon.png",
@@ -38,22 +38,16 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "background": {
-    "service_worker": "bg_page.js"
+    "service_worker": "src/bg_page.ts"
   },
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "http://pa.cc.unc.edu/*",
+        "https://pa.cc.unc.edu/*"
       ],
-      "js": [
-        "jquery.min.js",
-        "data_processing.js",
-        "script.js"
-      ],
-      "css": [
-        "styles.css"
-      ]
+      "js": ["src/content_scripts/controller.ts"],
+      "css": ["src/styles.css"]
     }
   ]
 }

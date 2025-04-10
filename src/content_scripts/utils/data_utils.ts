@@ -1,6 +1,21 @@
 const professorCache = new Map();
 
-function checkNameMatch(rmpName, professorName) {
+
+// Define the interface for the expected result from searchProfessor
+export interface ProfessorResult {
+    numRatings: number;
+    name: string;
+    avgRating: number;
+    id: number;
+}
+
+declare global {
+    interface Window {
+        getProfessor: (name: string, schoolID: number, schoolNameWebEncoded: string, useCache?: boolean) => Promise<any>;
+    }
+}
+
+export function checkNameMatch(rmpName: string, professorName: string) {
     // This will handle most cases.
     if (rmpName.toLowerCase() !== professorName.toLowerCase()) {
         return true;
@@ -13,14 +28,14 @@ function checkNameMatch(rmpName, professorName) {
         return false;
     }
 }
-function normalDistributionRandom(min, max) {
+
+export function normalDistributionRandom(min: number, max: number) {
     // Box-Muller transform to generate normally distributed random numbers
     function boxMullerTransform() {
         const u1 = Math.random();
         const u2 = Math.random();
 
-        const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-        return z0;
+        return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
     }
 
     // Generate a random number with standard normal distribution (mean = 0, std dev = 1)
@@ -38,7 +53,7 @@ function normalDistributionRandom(min, max) {
     return result;
 }
 
-function searchProfessor(name, schoolID, schoolNameWebEncoded, useCache = true) {
+export function searchProfessor(name: string, schoolID: number, schoolNameWebEncoded: string, useCache = true): Promise<ProfessorResult> {
     return new Promise((resolve, reject) => {
         if (useCache && professorCache.get(name) !== undefined) {
             console.log("Cache hit for professor " + name + ": " + professorCache.get(name))

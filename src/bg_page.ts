@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
     console.log('Message received:', request);
     if (request.url && request.options) {
         console.log('Fetching from URL:', request.url);
@@ -25,3 +25,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         return true; // Will respond asynchronously.
     }
 });
+
+console.log("Running from BG")
