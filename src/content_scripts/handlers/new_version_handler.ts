@@ -1,6 +1,6 @@
 import {waitForElement} from '../utils/dom_utils.ts';
 import {log} from "../../logger.ts";
-import {generateProfRating} from "../utils/rmp_utils.ts";
+import {generateProfRating, injectCSS} from "../utils/rmp_utils.ts";
 
 export async function handleNewSite() {
     let iframeDoc: Document;
@@ -11,6 +11,9 @@ export async function handleNewSite() {
 
         if (iframe && iframe.contentDocument) {
             iframeDoc = iframe.contentDocument;
+            if (iframeDoc) {
+                injectCSS(iframeDoc, undefined, 'registron-rating-styles');
+            }            
             const el = iframeDoc.querySelector(".cx-MuiTypography-root.cx-MuiTypography-h2.cx-MuiTypography-colorTextPrimary");
             log.debug("Found in iframe:", el?.textContent);
             if (el == null || el.textContent !== "Class Search") return false;
@@ -74,14 +77,14 @@ export async function handleNewSite() {
                             secondColumnTableEntry.removeChild(secondColumnTableEntry.childNodes[0]);
 
                             // Create a container for the rating boxes to place them side by side
-                            const ratingsContainer = document.createElement("div");
+                            const ratingsContainer = iframeDoc.createElement("div");
                             ratingsContainer.style.display = "flex"; // Use flexbox for side-by-side layout
                             ratingsContainer.style.gap = "5px"; // Add some spacing between rating boxes
                             ratingsContainer.setAttribute("data-registron-injected", "true");
 
                             // Append each rating element to the container
                             ratingElements.forEach((ratingHtml) => {
-                                const tempDiv = document.createElement("div");
+                                const tempDiv = iframeDoc.createElement("div");
                                 tempDiv.innerHTML = ratingHtml;
                                 ratingsContainer.appendChild(tempDiv.firstChild!); // Append the <td> element
                             });
@@ -104,7 +107,7 @@ export async function handleNewSite() {
                         if (ratingElements !== null && ratingElements.length > 0) {
                             ratingElements.forEach((ratingHtml) => {
                                 widescreenDiv.appendChild(bufferDiv);
-                                const tempDiv = document.createElement("div");
+                                const tempDiv = iframeDoc.createElement("div");
                                 tempDiv.innerHTML = ratingHtml;
                                 widescreenDiv.appendChild(tempDiv);
                             })

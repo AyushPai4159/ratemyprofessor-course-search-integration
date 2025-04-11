@@ -1,10 +1,14 @@
 import { generateProfRating } from '../utils/rmp_utils.ts';
 import { getIframeDocument, waitForElement } from '../utils/dom_utils.ts';
 import $ from "jquery";
+import {injectCSS} from "../utils/rmp_utils.ts";
+
 
 export async function handleOldSite() {
     const iframeDoc = getIframeDocument();
     if (!iframeDoc) return;
+
+    injectCSS(iframeDoc, undefined, 'registron-rating-styles'); 
 
     const label = await waitForElement(() =>
         iframeDoc.getElementsByClassName("PSGROUPBOXLABEL")[0]
