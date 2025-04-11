@@ -15,9 +15,9 @@ declare global {
     }
 }
 
-export function checkNameMatch(rmpName: string, professorName: string) {
+export function checkNameMatch(rmpName: string, professorName: string): boolean {
     // This will handle most cases.
-    if (rmpName.toLowerCase() !== professorName.toLowerCase()) {
+    if (rmpName.toLowerCase() === professorName.toLowerCase()) {
         return true;
     } else {
         // TODO handle edge cases
@@ -217,7 +217,6 @@ fragment RateTeacherLink_teacher on Teacher {
                         reject(new Error('No professor found'));
                     }
                 } else {
-                    console.log(response)
                     reject(new Error('Invalid response format'));
                 }
             }
