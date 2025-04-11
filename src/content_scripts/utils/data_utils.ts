@@ -214,7 +214,7 @@ fragment RateTeacherLink_teacher on Teacher {
                         // console.log("Debug to ensure correct # of requests sent")
                         resolve(result);
                     } else {
-                        reject(new Error('No professor found'));
+                        reject(new Error(`No professor found for name: ${name} + schoolID: ${schoolID}`));
                     }
                 } else {
                     reject(new Error('Invalid response format'));

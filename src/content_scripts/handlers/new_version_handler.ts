@@ -1,7 +1,6 @@
 import {waitForElement} from '../utils/dom_utils.ts';
 import {log} from "../../logger.ts";
 import {generateProfRating} from "../utils/rmp_utils.ts";
-import $ from "jquery";
 
 export async function handleNewSite() {
     let iframeDoc: Document;
@@ -75,14 +74,23 @@ export async function handleNewSite() {
 
                     // Check if we've already injected ratings for this section
                     const lastChild: HTMLElement = fourthDiv.children[fourthDiv.children.length - 1] as HTMLElement;
-                    if (lastChild.getAttribute("data-registron-injected")) {
+                    if (lastChild.hasAttribute("data-registron-injected")) {
                         log.debug("Skipping section: already injected.");
                         continue;
                     }
+                    lastChild.setAttribute("data-registron-injected", "true");
 
                     // Generate ratings for all professors (single or multiple)
                     const ratingElements = await generateProfRating(instructorNameString);
-                    if (ratingElements && ratingElements.length > 0) {
+                    if (ratingElements !== null && ratingElements.length > 0) {
+                        let newNode: HTMLElement = lastChild.cloneNode(true) as HTMLElement;
+                        // @ts-ignore
+                        newNode.firstChild.childNodes[0].textContent = "Ratings:"
+                        // @ts-ignore
+                        let secondColumnTableEntry = newNode.firstChild.childNodes[1].firstChild.firstChild;
+                        if (secondColumnTableEntry === null) return;
+                        secondColumnTableEntry.removeChild(secondColumnTableEntry.childNodes[0]);
+
                         // Create a container for the rating boxes to place them side by side
                         const ratingsContainer = document.createElement("div");
                         ratingsContainer.style.display = "flex"; // Use flexbox for side-by-side layout
@@ -97,7 +105,8 @@ export async function handleNewSite() {
                         });
 
                         // Inject the container after the last child
-                        $(lastChild).after(ratingsContainer);
+                        secondColumnTableEntry.appendChild(ratingsContainer)
+                        fourthDiv.appendChild(newNode);
                         log.debug("✅ Injected rating elements into section.");
                     }
                 } catch (e) {

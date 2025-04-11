@@ -14,12 +14,15 @@ export async function handleOldSite() {
 
     for (let i = 0; i < numResults; i++) {
         const instructorSpan = iframeDoc.getElementById(`MTG_INSTR$${i}`);
-        if (instructorSpan) {
-            const name = instructorSpan.innerText.trim();
-            if (!name.includes(",")) {
-                const html = await generateProfRating(name);
-                if (html) $(instructorSpan).after(html);
-            }
-        }
+        if (instructorSpan === null || instructorSpan.hasAttribute("data-registron-injected")) continue
+
+        instructorSpan.setAttribute("data-registron-injected", "true");
+        const professorNames = instructorSpan.innerText.trim();
+        console.log(professorNames)
+        const htmls = await generateProfRating(professorNames)
+        if (htmls === null || htmls.length < 1) continue;
+        htmls.forEach((html) => {
+            if (html) $(instructorSpan).after(html);
+        })
     }
 }

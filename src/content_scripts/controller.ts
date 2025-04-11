@@ -5,14 +5,31 @@ import {log} from "../logger.ts";
 let lastCount: string = "";
 let isRunning = false;
 
-function detectSiteVersion() {
-    // You can inspect DOM patterns unique to the old/new layout
-    return 'new'; // or 'new'
+export function determineSiteType() {
+    const url = window.location.href;
+
+    // Extract the part of the URL that contains /s/ or /c/
+    const pathMatch = url.match(/\/[s|c]\//);
+
+    if (!pathMatch) {
+        return null; // Default case if neither /s/ nor /c/ is found
+    }
+
+    switch (pathMatch[0]) {
+        case '/c/':
+            return 'old';
+        case '/s/':
+            return 'new';
+        default:
+            return null;
+    }
 }
 
 function checkAndRun() {
     log.debug("Running Script...")
-    if (detectSiteVersion() == "old") {
+    let handler: Promise<void>;
+
+    if (determineSiteType() === "old") {
         const iframeDoc = getIframeDocument();
         if (!iframeDoc) return;
 
@@ -28,29 +45,23 @@ function checkAndRun() {
             isRunning = true;
 
             console.log("Detected change, injecting RMP...");
-
-            const siteVersion = detectSiteVersion();
-
-            const handler = siteVersion === 'old' ? handleOldSite : handleNewSite; // TODO fix
-
-            handler()
-                .catch(console.error)
-                .finally(() => {
-                    isRunning = false;
-                    console.log("RMP injection completed.");
-                });
         }
-    } else if (detectSiteVersion() == "new") {
-        const handler: Promise<any> = handleNewSite();
 
-        handler.catch(console.error)
-            .then(() => {
-                isRunning = false;
-                // console.log("RMP injection completed.");
-            }, (error) => {
-                log.debug("RMP injection failed with error: ", error);
-            });
+        handler = handleOldSite();
+
+    } else if (determineSiteType() === "new") {
+        handler = handleNewSite();
+    } else {
+        handler = new Promise(() => {})
     }
+
+    handler.catch(console.error)
+        .then(() => {
+            isRunning = false;
+            // console.log("RMP injection completed.");
+        }, (error) => {
+            log.debug("RMP injection failed with error: ", error);
+        });
 }
 
 setInterval(checkAndRun, 500);
