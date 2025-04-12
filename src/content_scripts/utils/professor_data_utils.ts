@@ -6,6 +6,8 @@ export interface ProfessorResult {
     numRatings: number;
     name: string;
     avgRating: number;
+    avgDifficulty: number;
+    wouldTakeAgainPercent: any;
     id: number;
 }
 
@@ -205,6 +207,7 @@ fragment RateTeacherLink_teacher on Teacher {
                             department: professor.department,
                             school: professor.school.name,
                             avgRating: professor.avgRating,
+                            avgDifficulty: professor.avgDifficulty,
                             numRatings: professor.numRatings,
                             wouldTakeAgainPercent: professor.wouldTakeAgainPercentRounded,
                             id: professor.legacyId
