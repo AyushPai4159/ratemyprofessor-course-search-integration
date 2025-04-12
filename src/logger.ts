@@ -1,4 +1,4 @@
-type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'none';
+type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'none' | 'verbose';
 
 class Logger {
     private readonly prefix: string;
@@ -10,6 +10,7 @@ class Logger {
         info: '#2196F3',    // Blue
         warn: '#FFC107',    // Amber
         error: '#F44336',   // Red
+        verbose: "#916969",
         none: ''
     };
 
@@ -25,7 +26,8 @@ class Logger {
             error: 1,
             warn: 2,
             info: 3,
-            debug: 4
+            debug: 4,
+            verbose: 5
         };
         return levels[level] <= levels[this.level];
     }
@@ -43,6 +45,12 @@ class Logger {
         ];
 
         return [levelTag, ...styles, ...args];
+    }
+
+    verbose(...args: unknown[]) {
+        if (this.shouldLog('verbose')) {
+            console.debug(...this.formatMessage('verbose', args));
+        }
     }
 
     debug(...args: unknown[]) {

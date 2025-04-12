@@ -6,10 +6,10 @@
     <title>Extension UI</title>
     <link rel="stylesheet" href="popup.css">
 </head>
-<body style="width: 300px; height: 400px;">
+<body style="width: 600px; height: 400px;">
 <div class="container">
     <header>
-        <h1 class="extension-title">ConnectCarolina RateMyProfessor Integration</h1>
+        <h1 class="extension-title">Registron</h1>
         <img src="../../public/icons/icon.png" alt="Logo" class="logo">
     </header>
 
@@ -21,8 +21,41 @@
                     Turning this setting off will prevent detailed requests for comments from being sent when you hover your mouse over a profile.
                 </div>
             </button>
-            <button id="enable-feature" class="toggle-button">Enable Feature</button>
-            <button id="disable-feature" class="toggle-button">Disable Feature</button>
+            <button id="enable-feature" class="toggle-button">Enable Feature 1</button>
+            <button id="disable-feature" class="toggle-button">Enable Feature 2</button>
+        </div>
+
+        <div id="transcript-summary-section">
+            <h4>Transcript Summary</h4>
+            <div id="transcript-status" class="status-message">Loading...</div>
+
+            <div id="transcript-data" style="display: none;">
+                <div>
+                    <strong>Cumulative GPA:</strong>
+                    <span id="transcript-gpa"></span>
+                </div>
+                <div>
+                    <strong>Career Earned Credits:</strong>
+                    <span id="transcript-career-earned"></span>
+                </div>
+                <div>
+                    <strong>Transfer Earned Credits:</strong>
+                    <span id="transcript-transfer-earned"></span>
+                </div>
+                <div>
+                    <strong>Majors:</strong>
+                    <span id="transcript-majors"></span>
+                </div>
+                <div>
+                    <strong>Subplans/Minors:</strong>
+                    <span id="transcript-subplans"></span>
+                </div>
+            </div>
+
+            <div id="transcript-action" style="display: none;">
+                <p><em>Visit the <a href="https://pa.cc.unc.edu/" target="_blank" rel="noopener noreferrer">New ConnectCarolina unofficial transcript page</a> to fetch data.</em></p>
+                <button id="force-refresh-button">Try Refreshing Data</button> <!-- Optional refresh -->
+            </div>
         </div>
     </main>
 

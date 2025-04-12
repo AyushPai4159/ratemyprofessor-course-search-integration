@@ -15,7 +15,7 @@ export async function handleNewSite() {
                 injectCSS(iframeDoc, undefined, 'registron-rating-styles');
             }            
             const el = iframeDoc.querySelector(".cx-MuiTypography-root.cx-MuiTypography-h2.cx-MuiTypography-colorTextPrimary");
-            log.debug("Found in iframe:", el?.textContent);
+            log.verbose("Found in iframe:", el?.textContent);
             if (el == null || el.textContent !== "Class Search") return false;
 
             // Check if the wrapper object which contains all the class data for the search as its children exists
@@ -28,7 +28,7 @@ export async function handleNewSite() {
         }
         return true;
     }).then(async () => {
-        log.debug("✅ Conditions met: on 'Class Search' page and wrapper exists.");
+        log.verbose("✅ Conditions met: on 'Class Search' page and wrapper exists.");
 
         const thirdChild: Element | null = wrapper.children[2] ?? null;
         if (!thirdChild || thirdChild.children.length !== 1) {
@@ -60,7 +60,7 @@ export async function handleNewSite() {
                         // Check if we've already injected ratings for this section
                         const lastChild: HTMLElement = mobileDiv.children[mobileDiv.children.length - 1] as HTMLElement;
                         if (lastChild.hasAttribute("data-registron-injected")) {
-                            log.debug("Skipping section: already injected.");
+                            log.verbose("Skipping section: already injected.");
                             continue;
                         }
                         lastChild.setAttribute("data-registron-injected", "true");
@@ -92,7 +92,7 @@ export async function handleNewSite() {
                             // Inject the container after the last child
                             secondColumnTableEntry.appendChild(ratingsContainer)
                             mobileDiv.appendChild(newNode);
-                            log.debug("✅ Injected rating elements into section.");
+                            log.verbose("✅ Injected rating elements into section.");
                             continue;
                         }
                     }
@@ -120,6 +120,6 @@ export async function handleNewSite() {
             }
         }
     }).catch(() => {
-        log.debug("❌ Promise rejected: conditions not met.");
+        log.verbose("❌ Promise rejected: conditions not met.");
     });
 }

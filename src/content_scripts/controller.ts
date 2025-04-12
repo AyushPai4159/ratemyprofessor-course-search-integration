@@ -26,7 +26,7 @@ export function determineSiteType() {
 }
 
 function checkAndRun() {
-    log.debug("Running Script...")
+    log.verbose("Running Script...")
     let handler: Promise<void>;
 
     if (determineSiteType() === "old") {
@@ -60,9 +60,9 @@ function checkAndRun() {
             isRunning = false;
             // console.log("RMP injection completed.");
         }, (error) => {
-            log.debug("RMP injection failed with error: ", error);
+            log.verbose("RMP injection failed with error: ", error);
         });
 }
 
 setInterval(checkAndRun, 500);
-log.debug("Running from controller")
+log.verbose("Running from controller")

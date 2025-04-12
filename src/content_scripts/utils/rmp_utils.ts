@@ -1,4 +1,4 @@
-import {checkNameMatch, searchProfessor} from './data_utils.ts';
+import {checkNameMatch, searchProfessor} from './professor_data_utils.ts';
 import {log} from "../../logger.ts";
 
 const schoolID = 1232;

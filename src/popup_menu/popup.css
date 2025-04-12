@@ -137,3 +137,29 @@ footer a {
     display: block;
 }
 
+
+#transcript-summary-section {
+    font-family: sans-serif;
+    padding: 10px;
+    min-width: 250px; /* Adjust as needed */
+}
+#transcript-summary-section h4 {
+    margin-top: 0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+#transcript-summary-section div {
+    margin-bottom: 5px;
+}
+.status-message {
+    font-style: italic;
+    color: #555;
+}
+#transcript-majors, #transcript-subplans {
+    display: block; /* Make majors/subplans appear on new lines if long */
+    margin-left: 10px;
+}
+#force-refresh-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+}

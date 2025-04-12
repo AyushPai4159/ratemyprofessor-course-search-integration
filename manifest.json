@@ -1,3 +1,4 @@
+
 {
   "$schema": "https://json.schemastore.org/chrome-manifest",
   "manifest_version": 3,
@@ -26,9 +27,12 @@
     }
   },
   "host_permissions": [
-    "https://www.ratemyprofessors.com/"
+    "https://www.ratemyprofessors.com/",
+    "https://cs.cc.unc.edu/*",
+    "https://pa.cc.unc.edu/*"
   ],
   "permissions": [
+    "cookies",
     "webRequest",
     "webNavigation",
     "tabs",
