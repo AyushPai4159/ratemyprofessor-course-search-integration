@@ -26,7 +26,7 @@ export async function handleOldSite() {
         const htmls = await generateProfRating(professorNames)
         if (htmls === null || htmls.length < 1) continue;
         htmls.forEach((html) => {
-            if (html) $(instructorSpan).after(html);
+            if (html) $(instructorSpan).after(html[0]);
         })
     }
 }
